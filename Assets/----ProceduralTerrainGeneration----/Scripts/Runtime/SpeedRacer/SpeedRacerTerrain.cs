@@ -1,99 +1,103 @@
-using UnityEngine;
-
-[ExecuteAlways]
-[RequireComponent(typeof(MeshRenderer))]
-[RequireComponent(typeof(MeshCollider))]
-public class SpeedRacerTerrain : MonoBehaviour
+namespace com.faith.procedural
 {
-    #region Public Variables
+    using UnityEngine;
 
-    public MeshRenderer MeshRendererReference { get => _meshRendererReference; }
-    public MeshCollider MeshColliderReference { get => _meshColliderReference; }
+    [ExecuteAlways]
+    [RequireComponent(typeof(MeshRenderer))]
+    [RequireComponent(typeof(MeshCollider))]
+    public class SpeedRacerTerrain : MonoBehaviour
+    {
+        #region Public Variables
 
-    #endregion
+        public MeshRenderer MeshRendererReference { get => _meshRendererReference; }
+        public MeshCollider MeshColliderReference { get => _meshColliderReference; }
 
-    #region Private Variables
+        #endregion
+
+        #region Private Variables
 
 #if UNITY_EDITOR
 
-    [SerializeField] private bool _showGizomos;
+        [SerializeField] private bool _showGizomos;
 
 #endif
 
-    private MeshRenderer _meshRendererReference;
-    private MeshCollider _meshColliderReference;
+        private MeshRenderer _meshRendererReference;
+        private MeshCollider _meshColliderReference;
 
-    private const bool GIZMOS_ON_SELECTED = false;
+        private const bool GIZMOS_ON_SELECTED = false;
 
-    #endregion
+        #endregion
 
-    #region Configuretion
+        #region Configuretion
 
 #if UNITY_EDITOR
 
-    private void GizmosGUI()
-    {
-        if (_showGizomos)
+        private void GizmosGUI()
         {
-            if (_meshRendererReference != null)
+            if (_showGizomos)
             {
-                Gizmos.DrawWireCube(
-                        _meshRendererReference.bounds.center,
-                        _meshRendererReference.bounds.size
-                    );
+                if (_meshRendererReference != null)
+                {
+                    Gizmos.DrawWireCube(
+                            _meshRendererReference.bounds.center,
+                            _meshRendererReference.bounds.size
+                        );
+                }
             }
+
+
+
+
         }
 
-        
-
-
-    }
-
 #endif
 
 
-    #endregion
+        #endregion
 
-    #region Mono Behaviour
+        #region Mono Behaviour
 
 #if UNITY_EDITOR
 
-    private void OnDrawGizmosSelected()
-    {
-        if (GIZMOS_ON_SELECTED)
-            GizmosGUI();
-    }
+        private void OnDrawGizmosSelected()
+        {
+            if (GIZMOS_ON_SELECTED)
+                GizmosGUI();
+        }
 
-    private void OnDrawGizmos()
-    {
-        if (!GIZMOS_ON_SELECTED)
-            GizmosGUI();
-    }
+        private void OnDrawGizmos()
+        {
+            if (!GIZMOS_ON_SELECTED)
+                GizmosGUI();
+        }
 
-    private void OnValidate()
-    {
+        private void OnValidate()
+        {
 
-    }
+        }
 
 #endif
 
-    private void Awake()
-    {
-        _meshRendererReference = GetComponent<MeshRenderer>();
-        _meshColliderReference = GetComponent<MeshCollider>();
+        private void Awake()
+        {
+            _meshRendererReference = GetComponent<MeshRenderer>();
+            _meshColliderReference = GetComponent<MeshCollider>();
 
-        
+
+        }
+
+
+
+        private void OnEnable()
+        {
+            _meshRendererReference = GetComponent<MeshRenderer>();
+            _meshColliderReference = GetComponent<MeshCollider>();
+        }
+
+
+
+        #endregion
     }
 
-
-
-    private void OnEnable()
-    {
-        _meshRendererReference = GetComponent<MeshRenderer>();
-        _meshColliderReference = GetComponent<MeshCollider>();
-    }
-
-
-
-    #endregion
 }
