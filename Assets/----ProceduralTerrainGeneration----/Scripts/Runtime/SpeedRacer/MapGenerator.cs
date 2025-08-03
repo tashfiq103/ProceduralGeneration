@@ -7,12 +7,12 @@ namespace com.faith.procedural
 
     using UnityEditor;
 
-    [CustomEditor(typeof(SpeedRacerMapGenerator))]
-    public class SpeedRacerMapGeneratorEditor : Editor
+    [CustomEditor(typeof(MapGenerator))]
+    public class MapGeneratorEditor : Editor
     {
         #region Private Variables
 
-        private SpeedRacerMapGenerator _reference;
+        private MapGenerator _reference;
 
         #endregion
 
@@ -20,7 +20,7 @@ namespace com.faith.procedural
 
         private void OnEnable()
         {
-            _reference = (SpeedRacerMapGenerator)target;
+            _reference = (MapGenerator)target;
 
             if (_reference == null)
                 return;
@@ -56,7 +56,7 @@ namespace com.faith.procedural
 
 #endif
 
-    public class SpeedRacerMapGenerator : MonoBehaviour
+    public class MapGenerator : MonoBehaviour
     {
 
         #region Custom Variables
@@ -86,7 +86,7 @@ namespace com.faith.procedural
 #endif
 
         [Header("External Reference")]
-        public SpeedRacerMapTextureGenerator speedRacerMapTextureGenerator;
+        public MapTextureGenerator speedRacerMapTextureGenerator;
 
         [Space(10f)]
         public MeshFilter meshFilter;
@@ -108,7 +108,7 @@ namespace com.faith.procedural
 
         #region Configuretion
 
-        private int GetTerrainAsset(float heightMap, float regionMinHeight, float regionMaxHeight, float regionDensity, int numberOfTerrainAsset, SpeedRacerTerrainDataAsset[] terrainAssets)
+        private int GetTerrainAsset(float heightMap, float regionMinHeight, float regionMaxHeight, float regionDensity, int numberOfTerrainAsset, TerrainDataAsset[] terrainAssets)
         {
             float interpolatedRandomPoint = Mathf.Lerp(regionMinHeight, regionMaxHeight, Random.Range(0f, 1f));
             float minDiffValue = 1;
@@ -173,7 +173,7 @@ namespace com.faith.procedural
             //------------------------
             _listOfTerrain = new List<GameObject>();
 
-            SpeedRacerMapDataAsset speedRacerTerrainData = speedRacerMapTextureGenerator.terrainData;
+            MapDataAsset speedRacerTerrainData = speedRacerMapTextureGenerator.terrainData;
             int numberOfRegion = speedRacerTerrainData.regions.Length;
 
             int textureWidth = noiseMap.GetLength(0);
@@ -262,7 +262,7 @@ namespace com.faith.procedural
 
                             if (terrainIndex != -1)
                             {
-                                SpeedRacerTerrainDataAsset terrainAsset = speedRacerTerrainData.regions[regionIndex].regionLayers[regionLayerIndex]._terrainAsset[terrainIndex];
+                                TerrainDataAsset terrainAsset = speedRacerTerrainData.regions[regionIndex].regionLayers[regionLayerIndex]._terrainAsset[terrainIndex];
 
                                 float probability = Random.Range(0f, 1f);
 
@@ -290,7 +290,7 @@ namespace com.faith.procedural
                                                 Vector3 newTerrainScale = Vector3.Lerp(terrainAsset.lowerScaleBound, terrainAsset.randomScaleUpperBound, Random.Range(0f, 1f));
                                                 if (speedRacerTerrainData.regions[regionIndex].regionLayers[regionLayerIndex].checkBoundingBox)
                                                 {
-                                                    MeshRenderer meshRendererReference = terrainRegionHeirarchy[regionIndex].terrainRegionLayerHierarchy[regionLayerIndex].terrainAssetPrefab[terrainIndex].GetComponent<SpeedRacerTerrain>().MeshRendererReference;
+                                                    MeshRenderer meshRendererReference = terrainRegionHeirarchy[regionIndex].terrainRegionLayerHierarchy[regionLayerIndex].terrainAssetPrefab[terrainIndex].GetComponent<Terrain>().MeshRendererReference;
                                                     meshRendererReference.transform.localScale = newTerrainScale * boundCompromizedValue;
 
                                                     int numberOfTerrainOfRegionLayer = terrainRegionHeirarchy[regionIndex].terrainRegionLayerHierarchy[regionLayerIndex].listOfTerrainMeshRenderer.Count;
@@ -328,7 +328,7 @@ namespace com.faith.procedural
                                                     terrain.name = terrainAsset.terrainPrefab.name;
 
                                                     terrain.transform.SetParent(terrainRegionHeirarchy[regionIndex].terrainRegionLayerHierarchy[regionLayerIndex].regionLayerParentTransform);
-                                                    terrainRegionHeirarchy[regionIndex].terrainRegionLayerHierarchy[regionLayerIndex].listOfTerrainMeshRenderer.Add(terrain.GetComponent<SpeedRacerTerrain>().MeshRendererReference);
+                                                    terrainRegionHeirarchy[regionIndex].terrainRegionLayerHierarchy[regionLayerIndex].listOfTerrainMeshRenderer.Add(terrain.GetComponent<Terrain>().MeshRendererReference);
                                                 }
 
                                                 break;
@@ -385,7 +385,7 @@ namespace com.faith.procedural
             float[,] noiseMap;
             Color[] colorMap;
             Texture2D mapTexture = speedRacerMapTextureGenerator.GenerateMapTexture(out noiseMap, out colorMap);
-            MeshData meshData = SpeedRacerMapMeshGenerator.GenerateTerrainMesh(noiseMap, heightMultiplierForInnerRegion, meshHeightCurveForInnerRegion, speedRacerMapTextureGenerator.levelOfDetail);
+            MeshData meshData = MapMeshGenerator.GenerateTerrainMesh(noiseMap, heightMultiplierForInnerRegion, meshHeightCurveForInnerRegion, speedRacerMapTextureGenerator.levelOfDetail);
 
             meshFilter.sharedMesh = meshData.CreateMesh();
             meshRenderer.sharedMaterial.mainTexture = mapTexture;
@@ -408,7 +408,7 @@ namespace com.faith.procedural
             Color[] colorMap;
             Texture2D mapTexture = speedRacerMapTextureGenerator.GenerateMapTexture(out noiseMap, out colorMap);
 
-            float startRow = -((gridSize * SpeedRacerMapMeshGenerator.MESH_CHUNK_SIZE) / 2f) - (gridSize % 2 == 0 ? (SpeedRacerMapMeshGenerator.MESH_CHUNK_SIZE / 2f) : 0);
+            float startRow = -((gridSize * MapMeshGenerator.MESH_CHUNK_SIZE) / 2f) - (gridSize % 2 == 0 ? (MapMeshGenerator.MESH_CHUNK_SIZE / 2f) : 0);
             float startColumn = startRow;
 
             for (int row = 0; row < gridSize; row++)
@@ -416,15 +416,15 @@ namespace com.faith.procedural
                 for (int column = 0; column < gridSize; column++)
                 {
                     int index = row * gridSize + column;
-                    MeshData meshData = SpeedRacerMapMeshGenerator.GenerateTerrainMeshChunk(row, column, gridSize, noiseMap, heightMultiplierForInnerRegion, meshHeightCurveForInnerRegion, absoluteLevelOfDetail);
+                    MeshData meshData = MapMeshGenerator.GenerateTerrainMeshChunk(row, column, gridSize, noiseMap, heightMultiplierForInnerRegion, meshHeightCurveForInnerRegion, absoluteLevelOfDetail);
 
-                    SpeedRacerMapChunk mapChunk = Instantiate(mapChunkPrefab, transform).GetComponent<SpeedRacerMapChunk>();
+                    MapChunk mapChunk = Instantiate(mapChunkPrefab, transform).GetComponent<MapChunk>();
                     mapChunk.name = $"MapChunk({row},{column})|({index})";
 
                     mapChunk.meshFilter.mesh = meshData.CreateMesh();
                     mapChunk.meshRenderer.material.mainTexture = mapTexture;
 
-                    mapChunk.transform.localPosition = new Vector3(startColumn + (column * SpeedRacerMapMeshGenerator.MESH_CHUNK_SIZE), 1, startRow + ((gridSize - row + 1) * SpeedRacerMapMeshGenerator.MESH_CHUNK_SIZE));
+                    mapChunk.transform.localPosition = new Vector3(startColumn + (column * MapMeshGenerator.MESH_CHUNK_SIZE), 1, startRow + ((gridSize - row + 1) * MapMeshGenerator.MESH_CHUNK_SIZE));
                 }
             }
         }

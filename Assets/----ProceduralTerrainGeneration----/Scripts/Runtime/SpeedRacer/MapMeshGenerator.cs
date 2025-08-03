@@ -41,7 +41,7 @@ namespace com.faith.procedural
         }
     }
 
-    public static class SpeedRacerMapMeshGenerator
+    public static class MapMeshGenerator
     {
         public const int MESH_CHUNK_SIZE = 241;
 

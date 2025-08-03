@@ -2,7 +2,7 @@ namespace com.faith.procedural
 {
     using UnityEngine;
 
-    public class SpeedRacerMapChunk : MonoBehaviour
+    public class MapChunk : MonoBehaviour
     {
         #region Public Variables
 

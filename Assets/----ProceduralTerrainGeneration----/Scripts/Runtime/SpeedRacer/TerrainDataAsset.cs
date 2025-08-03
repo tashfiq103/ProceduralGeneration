@@ -3,7 +3,7 @@ namespace com.faith.procedural
     using UnityEngine;
 
     [CreateAssetMenu(fileName = "SpeedRacerTerrainDataAsset", menuName = "ProceduralTerrain/SpeedRacerTerrainDataAsset")]
-    public class SpeedRacerTerrainDataAsset : ScriptableObject
+    public class TerrainDataAsset : ScriptableObject
     {
         #region Public Variables
 

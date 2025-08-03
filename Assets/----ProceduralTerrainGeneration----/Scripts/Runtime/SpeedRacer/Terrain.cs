@@ -5,7 +5,7 @@ namespace com.faith.procedural
     [ExecuteAlways]
     [RequireComponent(typeof(MeshRenderer))]
     [RequireComponent(typeof(MeshCollider))]
-    public class SpeedRacerTerrain : MonoBehaviour
+    public class Terrain : MonoBehaviour
     {
         #region Public Variables
 

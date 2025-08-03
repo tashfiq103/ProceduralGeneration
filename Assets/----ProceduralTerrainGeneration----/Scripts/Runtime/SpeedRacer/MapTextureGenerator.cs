@@ -6,12 +6,12 @@ namespace com.faith.procedural
 #if UNITY_EDITOR
 
     using UnityEditor;
-    [CustomEditor(typeof(SpeedRacerMapTextureGenerator))]
-    public class SpeedRacerMapTextureGeneratorEditor : Editor
+    [CustomEditor(typeof(MapTextureGenerator))]
+    public class MapTextureGeneratorEditor : Editor
     {
         #region Private Variables
 
-        private SpeedRacerMapTextureGenerator _reference;
+        private MapTextureGenerator _reference;
 
         #endregion
 
@@ -19,7 +19,7 @@ namespace com.faith.procedural
 
         private void OnEnable()
         {
-            _reference = (SpeedRacerMapTextureGenerator)target;
+            _reference = (MapTextureGenerator)target;
 
             if (_reference == null)
                 return;
@@ -54,7 +54,7 @@ namespace com.faith.procedural
 
 #endif
 
-    public class SpeedRacerMapTextureGenerator : MonoBehaviour
+    public class MapTextureGenerator : MonoBehaviour
     {
         #region Custom Variables
 
@@ -64,7 +64,7 @@ namespace com.faith.procedural
             public string name;
             [Range(0f, 1f)] public float height;
             public Color color;
-            public SpeedRacerTerrainDataAsset[] _terrainAsset;
+            public TerrainDataAsset[] _terrainAsset;
         }
 
         #endregion
@@ -97,7 +97,7 @@ namespace com.faith.procedural
         public float lacunarityForInnerRegion = 1;
 
         [Space(10f)]
-        public SpeedRacerMapDataAsset terrainData;
+        public MapDataAsset terrainData;
 
         [Header("Parameter  :   OuterRegion")]
         [SerializeField, Range(0.1f, 0.99f)] private float _radius = 0.5f;

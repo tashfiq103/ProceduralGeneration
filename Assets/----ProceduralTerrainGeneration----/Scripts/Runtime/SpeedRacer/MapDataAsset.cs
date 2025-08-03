@@ -10,7 +10,7 @@ namespace com.faith.procedural
 
 
     [CreateAssetMenu(fileName = "SpeedRacerMapDataAsset", menuName = "ProceduralTerrain/SpeedRacerMapDataAsset")]
-    public class SpeedRacerMapDataAsset : ScriptableObject
+    public class MapDataAsset : ScriptableObject
     {
         #region Custom Variables
 
@@ -41,7 +41,7 @@ namespace com.faith.procedural
 
             [Header("Terrain")]
             [Range(0f, 1f)] public float terrainDensityOnRegionLayer = 1;
-            public SpeedRacerTerrainDataAsset[] _terrainAsset;
+            public TerrainDataAsset[] _terrainAsset;
         }
 
         #endregion
@@ -78,12 +78,12 @@ namespace com.faith.procedural
 
 #if UNITY_EDITOR
 
-    [CustomEditor(typeof(SpeedRacerMapDataAsset))]
+    [CustomEditor(typeof(MapDataAsset))]
     public class SpeedRacerTerrainDataEditor : Editor
     {
         #region Private Variables
 
-        private SpeedRacerMapDataAsset _reference;
+        private MapDataAsset _reference;
 
         #endregion
 
@@ -91,7 +91,7 @@ namespace com.faith.procedural
 
         private void OnEnable()
         {
-            _reference = (SpeedRacerMapDataAsset)target;
+            _reference = (MapDataAsset)target;
 
             if (_reference == null)
                 return;
