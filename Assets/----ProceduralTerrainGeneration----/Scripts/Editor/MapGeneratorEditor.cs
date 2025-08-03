@@ -1,4 +1,4 @@
-namespace BarsStudio.InternalTool.ProceduralTerrainGeneration
+namespace com.faith.procedural
 {
 #if UNITY_EDITOR
 

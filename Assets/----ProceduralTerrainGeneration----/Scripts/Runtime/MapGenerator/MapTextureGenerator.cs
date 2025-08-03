@@ -1,7 +1,6 @@
 namespace com.faith.procedural
 {
     using UnityEngine;
-    using BarsStudio.InternalTool.ProceduralTerrainGeneration;
 
 #if UNITY_EDITOR
 
@@ -121,7 +120,7 @@ namespace com.faith.procedural
 
         public Texture2D GenerateMapTexture(out float[,] noiseMap, out Color[] colorMap)
         {
-            noiseMap = Noise.GenerateNoiseMap(seed, textureSize, textureSize, noiseScale, octavesForInnerRegion, persistanceForInnerRegion, lacunarityForInnerRegion, offset);
+            noiseMap = NoiseGenerator.GenerateNoiseMap(seed, textureSize, textureSize, noiseScale, octavesForInnerRegion, persistanceForInnerRegion, lacunarityForInnerRegion, offset);
 
             float midTextureSize = textureSize / 2f;
 
