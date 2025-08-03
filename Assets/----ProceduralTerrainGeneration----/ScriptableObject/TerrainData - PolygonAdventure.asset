@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d613b21b0dbb9c04fa46ba483358f1f5, type: 3}
+  m_Name: TerrainData - PolygonAdventure
+  m_EditorClassIdentifier: 
+  regions:
+  - regionName: DeepWater
+    regionInterpolatedHeight: 0.2
+    regionColor: {r: 0.16509432, g: 0.3647955, b: 1, a: 1}
+    regionLayers: []
+  - regionName: ShallowWater
+    regionInterpolatedHeight: 0.4
+    regionColor: {r: 0.16470587, g: 0.5038382, b: 1, a: 1}
+    regionLayers: []
+  - regionName: Mountain
+    regionInterpolatedHeight: 0.5
+    regionColor: {r: 1, g: 0.5482842, b: 0.16470587, a: 1}
+    regionLayers:
+    - regionLayerName: Moutain
+      checkBoundingBox: 1
+      boundCompromization: 0.5
+      tagsForPlacingTerrain:
+      - _tagIndex: 9
+        UseConstant: 1
+        ConstantValue: Tag_MeshSurface
+        Variable: {fileID: 0}
+      terrainDensityOnRegionLayer: 0.1
+      _terrainAsset:
+      - {fileID: 11400000, guid: 483f6d38ce606f14ea5f614b7662aca8, type: 2}
+      - {fileID: 11400000, guid: fa999ce7e301fad42af76f54e689e2ab, type: 2}
+      - {fileID: 11400000, guid: 023f1a4dc8638d1449525776bed03ac1, type: 2}
+      - {fileID: 11400000, guid: 674d31c8168ad96419cd5b4227ae9cf4, type: 2}
+    - regionLayerName: MoutainTree
+      checkBoundingBox: 1
+      boundCompromization: 0
+      tagsForPlacingTerrain:
+      - _tagIndex: 10
+        UseConstant: 1
+        ConstantValue: Tag_Mountain
+        Variable: {fileID: 0}
+      terrainDensityOnRegionLayer: 0.5
+      _terrainAsset:
+      - {fileID: 11400000, guid: 4425c87bd6482a749ac485b740be5b65, type: 2}
+      - {fileID: 11400000, guid: a5e43c29b0fa7af48a5931220a18e8fc, type: 2}
+      - {fileID: 11400000, guid: e24edfb4a8cec6c40b7cf6d8809db55c, type: 2}
+      - {fileID: 11400000, guid: db2e904ca57187c43a44d9236be6f883, type: 2}
+      - {fileID: 11400000, guid: 82419adefdf89a34e8dc4c06bc3a520e, type: 2}
+      - {fileID: 11400000, guid: 0fa49063eb1f26c45959645c90bf1eeb, type: 2}
+      - {fileID: 11400000, guid: 9a36673fb240eb14fa0362ecc9e43850, type: 2}
+      - {fileID: 11400000, guid: 8d090f39160e26848be0c83fe3053741, type: 2}
+      - {fileID: 11400000, guid: 94d90618b08ba1949b4cef78676c7848, type: 2}
+      - {fileID: 11400000, guid: e583481532c8ab04f97f974786fa0229, type: 2}
+      - {fileID: 11400000, guid: 73684d6c1ff1f00468596ba52ac78f2b, type: 2}
+      - {fileID: 11400000, guid: af29a6e7569139445aaa71f7a7dc3d21, type: 2}
+      - {fileID: 11400000, guid: 27d9c98e0bff1124590c51b6db316705, type: 2}
+      - {fileID: 11400000, guid: f9ebc5150939d224a9079a8e39ee6fce, type: 2}
+      - {fileID: 11400000, guid: f20439932def8084c9025638c6d6e5b0, type: 2}
+  - regionName: GreenLand
+    regionInterpolatedHeight: 1
+    regionColor: {r: 0.086432636, g: 0.6792453, b: 0, a: 1}
+    regionLayers:
+    - regionLayerName: GroundMounds
+      checkBoundingBox: 1
+      boundCompromization: 0.66
+      tagsForPlacingTerrain:
+      - _tagIndex: 9
+        UseConstant: 1
+        ConstantValue: Tag_MeshSurface
+        Variable: {fileID: 0}
+      terrainDensityOnRegionLayer: 1
+      _terrainAsset:
+      - {fileID: 11400000, guid: 87481c61caaa14f458dc6c622cd14239, type: 2}
+      - {fileID: 11400000, guid: 6d4257d69975ea64e85db9ee4c049504, type: 2}
+    - regionLayerName: Flowers
+      checkBoundingBox: 0
+      boundCompromization: 0
+      tagsForPlacingTerrain:
+      - _tagIndex: 8
+        UseConstant: 1
+        ConstantValue: Tag_Ground
+        Variable: {fileID: 0}
+      terrainDensityOnRegionLayer: 0.667
+      _terrainAsset:
+      - {fileID: 11400000, guid: f54e134259f6b774aa49853c2270457a, type: 2}
+      - {fileID: 11400000, guid: 570b1fca93091934791963fe5e35e06c, type: 2}
+      - {fileID: 11400000, guid: c568384ba29c46c4da9d0beb5b64ee05, type: 2}
+      - {fileID: 11400000, guid: 46fec18d0c8185d4183be4d412813549, type: 2}
+      - {fileID: 11400000, guid: b834680700a39d84d87a575b4d4d7daa, type: 2}
+      - {fileID: 11400000, guid: ac20dd7c92d477c4a97cf4e8d3a7d53a, type: 2}
+      - {fileID: 11400000, guid: e1540edd93b9fd54b9872e445cea0b8f, type: 2}
+      - {fileID: 11400000, guid: ee8ce20bfdeab954093aa8ae94a6522b, type: 2}
+    - regionLayerName: Trees
+      checkBoundingBox: 0
+      boundCompromization: 0
+      tagsForPlacingTerrain:
+      - _tagIndex: 8
+        UseConstant: 1
+        ConstantValue: Tag_Ground
+        Variable: {fileID: 0}
+      terrainDensityOnRegionLayer: 0.15
+      _terrainAsset:
+      - {fileID: 11400000, guid: 552ebb605d1fbde4fa1720d3f06a549f, type: 2}
+      - {fileID: 11400000, guid: e72024082a193a94d99736644058b442, type: 2}
+      - {fileID: 11400000, guid: 854ce7ae75514694e8b4a5945001ff05, type: 2}
+      - {fileID: 11400000, guid: 0b8f7a6fc90ce774d8dcdf018b21c8c3, type: 2}
+      - {fileID: 11400000, guid: f459bede676630b489b6608c051841b8, type: 2}
+      - {fileID: 11400000, guid: 56f39906bee36f94ca503ecc0b7ddcd6, type: 2}
+      - {fileID: 11400000, guid: 0d468d6e1ba7bc744959ac356f67100a, type: 2}
+      - {fileID: 11400000, guid: 073f582c31c2851419fc2cbb324a3812, type: 2}
+      - {fileID: 11400000, guid: 4e097ee54327d984cbd80eb3e6b81b6d, type: 2}
+      - {fileID: 11400000, guid: baba25cac367a3f4b9b9d4360df39751, type: 2}
+      - {fileID: 11400000, guid: 0c3619c93dc6f734c8aad9294c7a972b, type: 2}
+      - {fileID: 11400000, guid: 90c11f302d265c4488d0402d70b07267, type: 2}
+      - {fileID: 11400000, guid: 95a537ed34ea311419a3321a3cb870cc, type: 2}
+      - {fileID: 11400000, guid: 959e3d6bae7328340a4bfbeb1175f735, type: 2}
+      - {fileID: 11400000, guid: 67d523852d0aac24c90631c0fcabcd52, type: 2}
+      - {fileID: 11400000, guid: 23ff4808eaaeb324b9fd1dfd061e2ec8, type: 2}
+    - regionLayerName: Buildings
+      checkBoundingBox: 1
+      boundCompromization: 0
+      tagsForPlacingTerrain:
+      - _tagIndex: 8
+        UseConstant: 1
+        ConstantValue: Tag_Ground
+        Variable: {fileID: 0}
+      terrainDensityOnRegionLayer: 0.1
+      _terrainAsset:
+      - {fileID: 11400000, guid: b0684e2a46a4a8c44b86438bd138bbed, type: 2}
+      - {fileID: 11400000, guid: cbe5c90ab22376c4891be8194e5988af, type: 2}
+      - {fileID: 11400000, guid: b7b9d77b6dbdbee45ac22847001e05a7, type: 2}
+      - {fileID: 11400000, guid: c4076be6746589b4f93762ccbc1463ce, type: 2}
+      - {fileID: 11400000, guid: 730423b1f4a6be547bb7fb8ba5f53420, type: 2}
+      - {fileID: 11400000, guid: 8c19e6fa77141ff48b1e1b8485bd1d16, type: 2}
+      - {fileID: 11400000, guid: 7b0ed8f6cb1d4c749a533a685def85f0, type: 2}
+      - {fileID: 11400000, guid: afc0acfac84679b46a39a35b786cf30c, type: 2}
+      - {fileID: 11400000, guid: 17a5c3d19820e044eab25322c395f278, type: 2}
+      - {fileID: 11400000, guid: fc2eb20a5490c734d90da2f80ef82d83, type: 2}
+      - {fileID: 11400000, guid: 4d1f9771434dfbf49ad8e32cb590f6a7, type: 2}
+      - {fileID: 11400000, guid: 386859ddf9daddd4abfbcdd9c44276d8, type: 2}

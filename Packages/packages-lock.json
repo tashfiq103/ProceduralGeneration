@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.faith.core": {
+      "version": "https://github.com/tashfiq103/com.faith.core.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "936d07e9d12255f4beae687917245740659221c2"
+    },
     "com.unity.ai.navigation": {
       "version": "2.0.8",
       "depth": 0,

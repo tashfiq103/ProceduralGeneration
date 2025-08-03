@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de65e308f6d06a34bb56c1d14da71ada, type: 3}
+  m_Name: SM_Bld_Village_01
+  m_EditorClassIdentifier: 
+  terrainPrefab: {fileID: 192570, guid: ffac72511f45da24f8b43f004d2d48b2, type: 3}
+  lowerScaleBound: {x: 1, y: 1, z: 1}
+  randomScaleUpperBound: {x: 1, y: 1, z: 1}
+  terrainDensity: 0.4
+  heightMapBiasness: 0
