@@ -290,7 +290,7 @@ namespace com.faith.procedural
                                                 Vector3 newTerrainScale = Vector3.Lerp(terrainAsset.lowerScaleBound, terrainAsset.randomScaleUpperBound, Random.Range(0f, 1f));
                                                 if (speedRacerTerrainData.regions[regionIndex].regionLayers[regionLayerIndex].checkBoundingBox)
                                                 {
-                                                    MeshRenderer meshRendererReference = terrainRegionHeirarchy[regionIndex].terrainRegionLayerHierarchy[regionLayerIndex].terrainAssetPrefab[terrainIndex].GetComponent<Terrain>().MeshRendererReference;
+                                                    MeshRenderer meshRendererReference = terrainRegionHeirarchy[regionIndex].terrainRegionLayerHierarchy[regionLayerIndex].terrainAssetPrefab[terrainIndex].GetComponent<TerrainViwer>().MeshRendererReference;
                                                     meshRendererReference.transform.localScale = newTerrainScale * boundCompromizedValue;
 
                                                     int numberOfTerrainOfRegionLayer = terrainRegionHeirarchy[regionIndex].terrainRegionLayerHierarchy[regionLayerIndex].listOfTerrainMeshRenderer.Count;
@@ -328,7 +328,7 @@ namespace com.faith.procedural
                                                     terrain.name = terrainAsset.terrainPrefab.name;
 
                                                     terrain.transform.SetParent(terrainRegionHeirarchy[regionIndex].terrainRegionLayerHierarchy[regionLayerIndex].regionLayerParentTransform);
-                                                    terrainRegionHeirarchy[regionIndex].terrainRegionLayerHierarchy[regionLayerIndex].listOfTerrainMeshRenderer.Add(terrain.GetComponent<Terrain>().MeshRendererReference);
+                                                    terrainRegionHeirarchy[regionIndex].terrainRegionLayerHierarchy[regionLayerIndex].listOfTerrainMeshRenderer.Add(terrain.GetComponent<TerrainViwer>().MeshRendererReference);
                                                 }
 
                                                 break;

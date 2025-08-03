@@ -9,7 +9,7 @@ namespace com.faith.procedural
 #endif
 
 
-    [CreateAssetMenu(fileName = "SpeedRacerMapDataAsset", menuName = "ProceduralTerrain/SpeedRacerMapDataAsset")]
+    [CreateAssetMenu(fileName = "MapDataAsset", menuName = "ProceduralTerrain/MapDataAsset")]
     public class MapDataAsset : ScriptableObject
     {
         #region Custom Variables
