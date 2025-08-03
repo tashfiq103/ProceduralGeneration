@@ -1,12 +1,15 @@
-
-using UnityEngine;
-
-public class SpeedRacerMapChunk : MonoBehaviour
+namespace com.faith.procedural
 {
-    #region Public Variables
+    using UnityEngine;
 
-    public MeshFilter meshFilter;
-    public MeshRenderer meshRenderer;
+    public class SpeedRacerMapChunk : MonoBehaviour
+    {
+        #region Public Variables
 
-    #endregion
+        public MeshFilter meshFilter;
+        public MeshRenderer meshRenderer;
+
+        #endregion
+    }
 }
+
