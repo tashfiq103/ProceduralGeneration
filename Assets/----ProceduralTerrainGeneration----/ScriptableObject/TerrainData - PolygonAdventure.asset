@@ -43,9 +43,9 @@ MonoBehaviour:
       checkBoundingBox: 1
       boundCompromization: 0
       tagsForPlacingTerrain:
-      - _tagIndex: 10
+      - _tagIndex: 7
         UseConstant: 1
-        ConstantValue: Tag_Mountain
+        ConstantValue: Tag_Ground
         Variable: {fileID: 0}
       terrainDensityOnRegionLayer: 0.5
       _terrainAsset:

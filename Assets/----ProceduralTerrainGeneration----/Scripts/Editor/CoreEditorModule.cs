@@ -1,6 +1,6 @@
 ﻿namespace com.faith.procedural
 { 
-
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
@@ -323,7 +323,7 @@ public class CoreEditorModule    :   Editor
 }
 
 
-
+#endif
 
 }
 

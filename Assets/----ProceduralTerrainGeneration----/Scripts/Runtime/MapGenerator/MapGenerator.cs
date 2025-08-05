@@ -32,21 +32,16 @@ namespace com.faith.procedural
 
             if (DrawDefaultInspector())
             {
-                if (_reference.autoUpdate)
-                {
-                    _reference.GenerateMap();
-                }
+                
             }
 
+            //CoreEditorModule.DrawHorizontalLine();
+            EditorGUILayout.Space();
             if (GUILayout.Button("Generate Map"))
             {
                 _reference.GenerateMap();
             }
 
-            if (GUILayout.Button("Generate Map Chunk"))
-            {
-                _reference.GenerateMapChunk();
-            }
 
             serializedObject.ApplyModifiedProperties();
         }
@@ -78,12 +73,7 @@ namespace com.faith.procedural
 
         #region Public Variables
 
-#if UNITY_EDITOR
 
-        [Header("Editor")]
-        public bool autoUpdate = false;
-
-#endif
 
         [Header("External Reference")]
         public MapTextureGenerator speedRacerMapTextureGenerator;
@@ -92,15 +82,9 @@ namespace com.faith.procedural
         public MeshFilter meshFilter;
         public MeshRenderer meshRenderer;
 
-        [Header("ChunkParameter")]
-        public GameObject mapChunkPrefab;
-        public int mapScale = 100;
-        public int gridSize = 3;
-
-        [Header("Parameter  :   InnerRegion")]
-        [Range(0.1f, 1f)] public float levelOfDetail = .1f;
-        public float heightMultiplierForInnerRegion = 10;
-        public AnimationCurve meshHeightCurveForInnerRegion;
+        //[Header("Parameter  :   InnerRegion")]
+        [HideInInspector]public float heightMultiplierForInnerRegion = 0;
+        [HideInInspector]public AnimationCurve meshHeightCurveForInnerRegion = new AnimationCurve(new Keyframe[]{new Keyframe(0, 1), new Keyframe(1, 1)});
 
         private List<GameObject> _listOfTerrain;
 
@@ -394,39 +378,6 @@ namespace com.faith.procedural
             //meshRenderer.transform.localScale = Vector3.one * mapScale;
 
             StartCoroutine(GenerateTerrain(noiseMap, mapTexture, meshData));
-        }
-
-        public void GenerateMapChunk()
-        {
-            MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
-            foreach (MeshRenderer meshRenderer in meshRenderers)
-                Destroy(meshRenderer.gameObject);
-
-            int absoluteLevelOfDetail = Mathf.CeilToInt(levelOfDetail * 6);
-
-            float[,] noiseMap;
-            Color[] colorMap;
-            Texture2D mapTexture = speedRacerMapTextureGenerator.GenerateMapTexture(out noiseMap, out colorMap);
-
-            float startRow = -((gridSize * MapMeshGenerator.MESH_CHUNK_SIZE) / 2f) - (gridSize % 2 == 0 ? (MapMeshGenerator.MESH_CHUNK_SIZE / 2f) : 0);
-            float startColumn = startRow;
-
-            for (int row = 0; row < gridSize; row++)
-            {
-                for (int column = 0; column < gridSize; column++)
-                {
-                    int index = row * gridSize + column;
-                    MeshData meshData = MapMeshGenerator.GenerateTerrainMeshChunk(row, column, gridSize, noiseMap, heightMultiplierForInnerRegion, meshHeightCurveForInnerRegion, absoluteLevelOfDetail);
-
-                    MapChunk mapChunk = Instantiate(mapChunkPrefab, transform).GetComponent<MapChunk>();
-                    mapChunk.name = $"MapChunk({row},{column})|({index})";
-
-                    mapChunk.meshFilter.mesh = meshData.CreateMesh();
-                    mapChunk.meshRenderer.material.mainTexture = mapTexture;
-
-                    mapChunk.transform.localPosition = new Vector3(startColumn + (column * MapMeshGenerator.MESH_CHUNK_SIZE), 1, startRow + ((gridSize - row + 1) * MapMeshGenerator.MESH_CHUNK_SIZE));
-                }
-            }
         }
 
         #endregion

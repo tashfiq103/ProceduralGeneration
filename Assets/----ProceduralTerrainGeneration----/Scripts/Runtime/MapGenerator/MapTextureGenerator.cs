@@ -37,13 +37,16 @@ namespace com.faith.procedural
                     _reference.GenerateMapTexture(out noiseMap, out colorMap);
                 }
             }
-
-            if (GUILayout.Button("GenerateMapTexture"))
-            {
-                float[,] noiseMap;
-                Color[] colorMap;
-                _reference.GenerateMapTexture(out noiseMap, out colorMap);
+            if (!_reference.autoUpdate)
+            { 
+                if (GUILayout.Button("GenerateMapTexture"))
+                {
+                    float[,] noiseMap;
+                    Color[] colorMap;
+                    _reference.GenerateMapTexture(out noiseMap, out colorMap);
+                }
             }
+           
 
             serializedObject.ApplyModifiedProperties();
         }
@@ -164,7 +167,7 @@ namespace com.faith.procedural
                 int scaleSize = Mathf.Clamp(textureSize, 1, 128);
 
                 _texturePreview.sharedMaterial.mainTexture = colorTexture;
-                _texturePreview.transform.localScale = new Vector3(scaleSize, 1, scaleSize);
+                //_texturePreview.transform.localScale = new Vector3(scaleSize, 1, scaleSize);
             }
 
             return colorTexture;
