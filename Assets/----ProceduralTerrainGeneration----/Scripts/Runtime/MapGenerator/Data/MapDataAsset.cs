@@ -20,7 +20,7 @@ namespace com.faith.procedural
             #region Public Variables
 
             public string regionName;
-            [Range(0f, 1f)] public float regionInterpolatedHeight;
+            [Range(0f, 1f)] public float regionSpreadArea;
             public Color regionColor;
 
             [Space(10f)]
@@ -62,7 +62,7 @@ namespace com.faith.procedural
             int numberOfLegion = regions.Length;
             for (int i = 0; i < numberOfLegion; i++)
             {
-                if (interpolatedHeightMap <= regions[i].regionInterpolatedHeight)
+                if (interpolatedHeightMap <= regions[i].regionSpreadArea)
                 {
                     result = i;
                     break;
@@ -106,10 +106,10 @@ namespace com.faith.procedural
                 int numberOfRegions = _reference.regions.Length;
                 for (int i = 1; i < numberOfRegions - 1; i++)
                 {
-                    _reference.regions[i].regionInterpolatedHeight = Mathf.Clamp(
-                            _reference.regions[i].regionInterpolatedHeight,
-                            _reference.regions[i - 1].regionInterpolatedHeight,
-                            _reference.regions[i + 1].regionInterpolatedHeight
+                    _reference.regions[i].regionSpreadArea = Mathf.Clamp(
+                            _reference.regions[i].regionSpreadArea,
+                            _reference.regions[i - 1].regionSpreadArea,
+                            _reference.regions[i + 1].regionSpreadArea
                         );
 
                 }

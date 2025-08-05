@@ -143,7 +143,7 @@ namespace com.faith.procedural
                         float currentHeight = noiseMap[x, y];
                         for (int i = 0; i < terrainData.regions.Length; i++)
                         {
-                            if (currentHeight <= terrainData.regions[i].regionInterpolatedHeight)
+                            if (currentHeight <= terrainData.regions[i].regionSpreadArea)
                             {
                                 colorMap[index] = terrainData.regions[i].regionColor;
                                 break;

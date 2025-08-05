@@ -76,7 +76,7 @@ namespace com.faith.procedural
 
 
         [Header("External Reference")]
-        public MapTextureGenerator speedRacerMapTextureGenerator;
+        public MapTextureGenerator mapTextureGenerator;
 
         [Space(10f)]
         public MeshFilter meshFilter;
@@ -157,8 +157,8 @@ namespace com.faith.procedural
             //------------------------
             _listOfTerrain = new List<GameObject>();
 
-            MapDataAsset speedRacerTerrainData = speedRacerMapTextureGenerator.terrainData;
-            int numberOfRegion = speedRacerTerrainData.regions.Length;
+            MapDataAsset terrainData = mapTextureGenerator.terrainData;
+            int numberOfRegion = terrainData.regions.Length;
 
             int textureWidth = noiseMap.GetLength(0);
             int textureHeight = noiseMap.GetLength(1);
@@ -173,30 +173,30 @@ namespace com.faith.procedural
             TerrainRegionHierarchy[] terrainRegionHeirarchy = new TerrainRegionHierarchy[numberOfRegion];
             for (int i = 0; i < numberOfRegion; i++)
             {
-                int numberOfRegionLayer = speedRacerTerrainData.regions[i].regionLayers.Length;
+                int numberOfRegionLayer = terrainData.regions[i].regionLayers.Length;
 
-                Transform regionParent = new GameObject($"Region - {speedRacerTerrainData.regions[i].regionName}").transform;
+                Transform regionParent = new GameObject($"Region - {terrainData.regions[i].regionName}").transform;
                 regionParent.SetParent(meshRenderer.transform);
                 regionParent.localPosition = Vector3.zero;
 
                 terrainRegionHeirarchy[i] = new TerrainRegionHierarchy() { regionParentTransform = regionParent, terrainRegionLayerHierarchy = new TerrainRegionLayerHierarchy[numberOfRegionLayer] };
                 for (int j = 0; j < numberOfRegionLayer; j++)
                 {
-                    Transform regionLayerParent = new GameObject($"RegionLayer - {speedRacerTerrainData.regions[i].regionLayers[j].regionLayerName}").transform;
+                    Transform regionLayerParent = new GameObject($"RegionLayer - {terrainData.regions[i].regionLayers[j].regionLayerName}").transform;
                     regionLayerParent.SetParent(regionParent);
                     regionLayerParent.localPosition = Vector3.zero;
 
                     terrainRegionHeirarchy[i].terrainRegionLayerHierarchy[j].regionLayerParentTransform = regionLayerParent;
 
-                    int numberOfTerrainAsset = speedRacerTerrainData.regions[i].regionLayers[j]._terrainAsset.Length;
+                    int numberOfTerrainAsset = terrainData.regions[i].regionLayers[j]._terrainAsset.Length;
                     terrainRegionHeirarchy[i].terrainRegionLayerHierarchy[j].terrainAssetPrefab = new GameObject[numberOfTerrainAsset];
                     for (int k = 0; k < numberOfTerrainAsset; k++)
                     {
                         terrainRegionHeirarchy[i].terrainRegionLayerHierarchy[j].terrainAssetPrefab[k] = Instantiate(
-                                speedRacerTerrainData.regions[i].regionLayers[j]._terrainAsset[k].terrainPrefab,
+                                terrainData.regions[i].regionLayers[j]._terrainAsset[k].terrainPrefab,
                                 meshRenderer.transform
                             );
-                        terrainRegionHeirarchy[i].terrainRegionLayerHierarchy[j].terrainAssetPrefab[k].name = $"BluePrint - {speedRacerTerrainData.regions[i].regionLayers[j]._terrainAsset[k].terrainPrefab}";
+                        terrainRegionHeirarchy[i].terrainRegionLayerHierarchy[j].terrainAssetPrefab[k].name = $"BluePrint - {terrainData.regions[i].regionLayers[j]._terrainAsset[k].terrainPrefab}";
 
                     }
 
@@ -208,12 +208,12 @@ namespace com.faith.procedural
             //------------------------
             for (int regionIndex = 0; regionIndex < numberOfRegion; regionIndex++)
             {
-                Color regionColor = speedRacerTerrainData.regions[regionIndex].regionColor;
+                Color regionColor = terrainData.regions[regionIndex].regionColor;
 
-                int numberOfRegionLayer = speedRacerTerrainData.regions[regionIndex].regionLayers.Length;
+                int numberOfRegionLayer = terrainData.regions[regionIndex].regionLayers.Length;
                 for (int regionLayerIndex = 0; regionLayerIndex < numberOfRegionLayer; regionLayerIndex++)
                 {
-                    int numberOfTerrainAssetInRegionLayer = speedRacerTerrainData.regions[regionIndex].regionLayers[regionLayerIndex]._terrainAsset.Length;
+                    int numberOfTerrainAssetInRegionLayer = terrainData.regions[regionIndex].regionLayers[regionLayerIndex]._terrainAsset.Length;
 
                     for (int meshRow = 0; meshRow < meshHeight - 1; meshRow++)
                     {
@@ -238,20 +238,20 @@ namespace com.faith.procedural
                             Vector3 sourcePosition = meshData.vertices[meshIndex] + new Vector3(0.5f, 500f, 0.5f);
                             int terrainIndex = GetTerrainAsset(
                                 noiseMapValue,
-                                regionIndex == 0 ? 0 : speedRacerTerrainData.regions[regionIndex - 1].regionInterpolatedHeight,
-                                speedRacerTerrainData.regions[regionIndex].regionInterpolatedHeight,
-                                speedRacerTerrainData.regions[regionIndex].regionLayers[regionLayerIndex].terrainDensityOnRegionLayer,
+                                regionIndex == 0 ? 0 : terrainData.regions[regionIndex - 1].regionSpreadArea,
+                                terrainData.regions[regionIndex].regionSpreadArea,
+                                terrainData.regions[regionIndex].regionLayers[regionLayerIndex].terrainDensityOnRegionLayer,
                                 numberOfTerrainAssetInRegionLayer,
-                                speedRacerTerrainData.regions[regionIndex].regionLayers[regionLayerIndex]._terrainAsset);
+                                terrainData.regions[regionIndex].regionLayers[regionLayerIndex]._terrainAsset);
 
                             if (terrainIndex != -1)
                             {
-                                TerrainDataAsset terrainAsset = speedRacerTerrainData.regions[regionIndex].regionLayers[regionLayerIndex]._terrainAsset[terrainIndex];
+                                TerrainDataAsset terrainAsset = terrainData.regions[regionIndex].regionLayers[regionLayerIndex]._terrainAsset[terrainIndex];
 
                                 float probability = Random.Range(0f, 1f);
 
                                 if (matchedValue >= .99f
-                                && probability <= terrainAsset.terrainDensity * speedRacerTerrainData.regions[regionIndex].regionLayers[regionLayerIndex].terrainDensityOnRegionLayer)
+                                && probability <= terrainAsset.terrainDensity * terrainData.regions[regionIndex].regionLayers[regionLayerIndex].terrainDensityOnRegionLayer)
                                 {
                                     //Debug.DrawRay(
                                     //        sourcePosition,
@@ -262,9 +262,9 @@ namespace com.faith.procedural
                                     if (Physics.Raycast(new Ray(sourcePosition, Vector3.down), out RaycastHit raycastHit, 510))
                                     {
 
-                                        TagReference[] filteredTagReferences = speedRacerTerrainData.regions[regionIndex].regionLayers[regionLayerIndex].tagsForPlacingTerrain;
+                                        TagReference[] filteredTagReferences = terrainData.regions[regionIndex].regionLayers[regionLayerIndex].tagsForPlacingTerrain;
                                         int numberOfFilteredTagReferences = filteredTagReferences.Length;
-                                        float boundCompromizedValue = 1 - speedRacerMapTextureGenerator.terrainData.regions[regionIndex].regionLayers[regionLayerIndex].boundCompromization;
+                                        float boundCompromizedValue = 1 - mapTextureGenerator.terrainData.regions[regionIndex].regionLayers[regionLayerIndex].boundCompromization;
 
                                         for (int filteredTagIndex = 0; filteredTagIndex < numberOfFilteredTagReferences; filteredTagIndex++)
                                         {
@@ -272,7 +272,7 @@ namespace com.faith.procedural
                                             {
                                                 bool generateTerrain = true;
                                                 Vector3 newTerrainScale = Vector3.Lerp(terrainAsset.lowerScaleBound, terrainAsset.randomScaleUpperBound, Random.Range(0f, 1f));
-                                                if (speedRacerTerrainData.regions[regionIndex].regionLayers[regionLayerIndex].checkBoundingBox)
+                                                if (terrainData.regions[regionIndex].regionLayers[regionLayerIndex].checkBoundingBox)
                                                 {
                                                     MeshRenderer meshRendererReference = terrainRegionHeirarchy[regionIndex].terrainRegionLayerHierarchy[regionLayerIndex].terrainAssetPrefab[terrainIndex].GetComponent<TerrainViwer>().MeshRendererReference;
                                                     meshRendererReference.transform.localScale = newTerrainScale * boundCompromizedValue;
@@ -368,8 +368,8 @@ namespace com.faith.procedural
         {
             float[,] noiseMap;
             Color[] colorMap;
-            Texture2D mapTexture = speedRacerMapTextureGenerator.GenerateMapTexture(out noiseMap, out colorMap);
-            MeshData meshData = MapMeshGenerator.GenerateTerrainMesh(noiseMap, heightMultiplierForInnerRegion, meshHeightCurveForInnerRegion, speedRacerMapTextureGenerator.levelOfDetail);
+            Texture2D mapTexture = mapTextureGenerator.GenerateMapTexture(out noiseMap, out colorMap);
+            MeshData meshData = MapMeshGenerator.GenerateTerrainMesh(noiseMap, heightMultiplierForInnerRegion, meshHeightCurveForInnerRegion, mapTextureGenerator.levelOfDetail);
 
             meshFilter.sharedMesh = meshData.CreateMesh();
             meshRenderer.sharedMaterial.mainTexture = mapTexture;
