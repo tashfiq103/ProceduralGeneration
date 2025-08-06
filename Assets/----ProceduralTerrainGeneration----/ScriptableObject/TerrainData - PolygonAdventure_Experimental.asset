@@ -47,7 +47,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: Tag_Mountain
         Variable: {fileID: 0}
-      terrainDensityOnRegionLayer: 0.5
+      terrainDensityOnRegionLayer: 0.25
       _terrainAsset:
       - {fileID: 11400000, guid: 4425c87bd6482a749ac485b740be5b65, type: 2}
       - {fileID: 11400000, guid: a5e43c29b0fa7af48a5931220a18e8fc, type: 2}
