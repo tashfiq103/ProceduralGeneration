@@ -1,27 +1,18 @@
+// Regenerated for runtime-safe generation (adaptive batching is in MapGenerator)
 namespace com.faith.procedural
 {
     using UnityEngine;
 
 #if UNITY_EDITOR
-
     using UnityEditor;
     [CustomEditor(typeof(MapTextureGenerator))]
     public class MapTextureGeneratorEditor : Editor
     {
-        #region Private Variables
-
         private MapTextureGenerator _reference;
-
-        #endregion
-
-        #region Editor
 
         private void OnEnable()
         {
             _reference = (MapTextureGenerator)target;
-
-            if (_reference == null)
-                return;
         }
 
         public override void OnInspectorGUI()
@@ -37,29 +28,25 @@ namespace com.faith.procedural
                     _reference.GenerateMapTexture(out noiseMap, out colorMap);
                 }
             }
+
             if (!_reference.autoUpdate)
-            { 
-                if (GUILayout.Button("GenerateMapTexture"))
+            {
+                if (GUILayout.Button("Generate Map Texture"))
                 {
                     float[,] noiseMap;
                     Color[] colorMap;
                     _reference.GenerateMapTexture(out noiseMap, out colorMap);
                 }
             }
-           
 
             serializedObject.ApplyModifiedProperties();
         }
-
-        #endregion
     }
-
 #endif
 
     public class MapTextureGenerator : MonoBehaviour
     {
-        #region Custom Variables
-
+        #region Custom Types
         [System.Serializable]
         public struct TerrainType
         {
@@ -68,95 +55,78 @@ namespace com.faith.procedural
             public Color color;
             public TerrainDataAsset[] _terrainAsset;
         }
-
         #endregion
 
-        #region Public Variables
-
 #if UNITY_EDITOR
-
-        [Header("EditorOnly")]
+        [Header("Editor Only")]
         public bool autoUpdate;
-
 #endif
 
         [Header("Debug")]
         [SerializeField] private Renderer _texturePreview;
 
-        [Header("Parameter  :   Texture")]
-        public int textureSize = 241;
-        [Range(1, 6)]
-        public int levelOfDetail = 1;
-        public float noiseScale = 1;
+        [Header("Texture Settings")]
+        [Min(2)] public int textureSize = 241;
+        [Range(1, 6)] public int levelOfDetail = 1;
+        [Min(0.0001f)] public float noiseScale = 1f;
 
-        [Header("Parameter  :   InnerRegion")]
+        [Header("Inner Region Noise")]
         public int seed = 1;
         public Vector2 offset;
-
-        [Space(10f)]
-        public int octavesForInnerRegion = 3;
+        [Min(1)] public int octavesForInnerRegion = 3;
         [Range(0f, 1f)] public float persistanceForInnerRegion = 0.5f;
-        public float lacunarityForInnerRegion = 1;
+        [Min(1f)] public float lacunarityForInnerRegion = 1f;
 
-        [Space(10f)]
+        [Space(6f)]
         public MapDataAsset terrainData;
 
-        [Header("Parameter  :   OuterRegion")]
+        [Header("Outer Region Ring")]
         [SerializeField, Range(0.1f, 0.99f)] private float _radius = 0.5f;
         [SerializeField] private Gradient _outerRadiusGradient;
 
-        #endregion
-
-        #region Mono Behaviour
-
-#if UNITY_EDITOR
-
-        private void OnValidate()
-        {
-        }
-
-#endif
-
-        #endregion
-
-        #region Public Callback
-
         public Texture2D GenerateMapTexture(out float[,] noiseMap, out Color[] colorMap)
         {
-            noiseMap = NoiseGenerator.GenerateNoiseMap(seed, textureSize, textureSize, noiseScale, octavesForInnerRegion, persistanceForInnerRegion, lacunarityForInnerRegion, offset);
+            // Generate noise map
+            noiseMap = NoiseGenerator.GenerateNoiseMap(
+                seed, textureSize, textureSize, noiseScale,
+                octavesForInnerRegion, persistanceForInnerRegion,
+                lacunarityForInnerRegion, offset
+            );
 
-            float midTextureSize = textureSize / 2f;
-
+            // Paint color map using regions + radial falloff
+            float mid = textureSize / 2f;
             colorMap = new Color[textureSize * textureSize];
+
+            Vector2 midV = new Vector2(mid, mid);
+            float denom = midV.magnitude;
+
             for (int y = 0; y < textureSize; y++)
             {
                 for (int x = 0; x < textureSize; x++)
                 {
-                    float magnitude = (new Vector2(x, y) - new Vector2(midTextureSize, midTextureSize)).magnitude;
-                    float interpolatedValue = magnitude / new Vector2(midTextureSize, midTextureSize).magnitude;
-                    float clampedInterpolatedValue = Mathf.InverseLerp(0, 0.707f, interpolatedValue);
+                    int idx = y * textureSize + x;
 
-                    int index = y * textureSize + x;
+                    float magnitude = (new Vector2(x, y) - midV).magnitude;
+                    float t = magnitude / denom;
+                    float clampedT = Mathf.InverseLerp(0f, 0.707f, t);
 
-                    if (clampedInterpolatedValue <= _radius)
+                    if (clampedT <= _radius)
                     {
-                        float currentHeight = noiseMap[x, y];
+                        float h = noiseMap[x, y];
                         for (int i = 0; i < terrainData.regions.Length; i++)
                         {
-                            if (currentHeight <= terrainData.regions[i].regionSpreadArea)
+                            if (h <= terrainData.regions[i].regionSpreadArea)
                             {
-                                colorMap[index] = terrainData.regions[i].regionColor;
+                                colorMap[idx] = terrainData.regions[i].regionColor;
                                 break;
                             }
                         }
                     }
                     else
                     {
-                        float modifiedInterpolatedValue = (interpolatedValue - (_radius * 0.707f)) / (1 - (_radius * 0.707f));
-                        colorMap[index] = _outerRadiusGradient.Evaluate(modifiedInterpolatedValue);
+                        float modT = (t - (_radius * 0.707f)) / (1 - (_radius * 0.707f));
+                        colorMap[idx] = _outerRadiusGradient.Evaluate(modT);
                     }
-
-
                 }
             }
 
@@ -164,16 +134,10 @@ namespace com.faith.procedural
 
             if (_texturePreview != null)
             {
-                int scaleSize = Mathf.Clamp(textureSize, 1, 128);
-
                 _texturePreview.sharedMaterial.mainTexture = colorTexture;
-                //_texturePreview.transform.localScale = new Vector3(scaleSize, 1, scaleSize);
             }
 
             return colorTexture;
         }
-
-        #endregion
     }
-
 }

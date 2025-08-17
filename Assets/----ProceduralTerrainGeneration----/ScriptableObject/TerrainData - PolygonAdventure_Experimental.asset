@@ -29,11 +29,11 @@ MonoBehaviour:
       checkBoundingBox: 1
       boundCompromization: 0.5
       tagsForPlacingTerrain:
-      - _tagIndex: 9
+      - _tagIndex: 7
         UseConstant: 1
         ConstantValue: Tag_MeshSurface
         Variable: {fileID: 0}
-      terrainDensityOnRegionLayer: 0.1
+      terrainDensityOnRegionLayer: 0.5
       _terrainAsset:
       - {fileID: 11400000, guid: 483f6d38ce606f14ea5f614b7662aca8, type: 2}
       - {fileID: 11400000, guid: fa999ce7e301fad42af76f54e689e2ab, type: 2}
@@ -72,7 +72,7 @@ MonoBehaviour:
       checkBoundingBox: 1
       boundCompromization: 0.66
       tagsForPlacingTerrain:
-      - _tagIndex: 9
+      - _tagIndex: 7
         UseConstant: 1
         ConstantValue: Tag_MeshSurface
         Variable: {fileID: 0}
@@ -84,7 +84,7 @@ MonoBehaviour:
       checkBoundingBox: 0
       boundCompromization: 0
       tagsForPlacingTerrain:
-      - _tagIndex: 7
+      - _tagIndex: 9
         UseConstant: 1
         ConstantValue: Tag_Ground
         Variable: {fileID: 0}
@@ -102,7 +102,7 @@ MonoBehaviour:
       checkBoundingBox: 0
       boundCompromization: 0
       tagsForPlacingTerrain:
-      - _tagIndex: 7
+      - _tagIndex: 9
         UseConstant: 1
         ConstantValue: Tag_Ground
         Variable: {fileID: 0}
@@ -128,7 +128,7 @@ MonoBehaviour:
       checkBoundingBox: 1
       boundCompromization: 0
       tagsForPlacingTerrain:
-      - _tagIndex: 7
+      - _tagIndex: 9
         UseConstant: 1
         ConstantValue: Tag_Ground
         Variable: {fileID: 0}
